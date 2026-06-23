@@ -1,13 +1,17 @@
-# DOCJT Academy V6 Single File Upload
+# DOCJT Academy V6 Root Upload Build
 
-This version is intentionally simplified for GitHub Pages.
+This ZIP is built specifically for GitHub's web uploader.
 
-Upload ONLY this `index.html` file directly into the root of the DOCJT_EXAM1 repository and overwrite the old one.
+Upload these files directly into the ROOT of the DOCJT_EXAM1 repository:
 
-You do not need:
+- index.html
 - style.css
 - script.js
 - questions.js
-- audio folders
+- README.md
 
-Everything is built into `index.html`.
+Do not upload the parent folder. The live site should show:
+
+DOCJT Academy V6 Alpha
+
+If the live site still says "Exam Trainer Pro", GitHub is still serving the old index.html.
