@@ -1,17 +1,21 @@
-# DOCJT Academy V6 Root Upload Build
+# DOCJT Academy V6 Alpha
 
-This ZIP is built specifically for GitHub's web uploader.
+Clean rebuild with:
+- Dark Navy + Neon Cyan hybrid tactical UI
+- Angular beveled cards
+- Your main music embedded: Quiz Click Sprint
+- Your boss music embedded: Crimson Gate
+- Rebuilt flashcards engine
+- Study Hub with Flashcards, Category Drill, Rapid Review, Marked, Missed, Smart Review
+- Exam Simulation
+- Boss Battle Alpha
+- Progress tracking
 
-Upload these files directly into the ROOT of the DOCJT_EXAM1 repository:
-
+Upload these files to GitHub:
 - index.html
-- style.css
-- script.js
+- main.css
+- app.js
 - questions.js
 - README.md
 
-Do not upload the parent folder. The live site should show:
-
-DOCJT Academy V6 Alpha
-
-If the live site still says "Exam Trainer Pro", GitHub is still serving the old index.html.
+No audio folder needed.
