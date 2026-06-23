@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DOCJT Academy V6.3 Emergency Stable</title>
+<title>DOCJT Academy V6.4 Navigation Fix</title>
 <style>
 :root{--bg:#050b14;--card:#0b1424;--card2:#122033;--cyan:#22d3ee;--text:#f8fafc;--muted:#94a3b8;--green:#22c55e;--red:#ef4444;--yellow:#facc15;--blue:#38bdf8}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top left,#102544,#050b14 55%,#020617);color:var(--text);min-height:100vh}.wrap{max-width:1100px;margin:auto;padding:16px 16px 78px}.top{border:1px solid rgba(34,211,238,.25);background:rgba(11,20,36,.96);padding:16px;margin-bottom:14px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.top h1{margin:0;font-size:clamp(28px,5vw,46px)}.top p{margin:4px 0 0;color:var(--muted)}.nav{display:flex;gap:8px;flex-wrap:wrap}.nav button,.btn{border:1px solid rgba(34,211,238,.25);background:rgba(34,211,238,.08);color:#fff;padding:12px 14px;font-weight:900;cursor:pointer;border-radius:10px}.nav button.active,.btn.primary{background:linear-gradient(135deg,#0891b2,#2563eb)}.btn.green{background:linear-gradient(135deg,#16a34a,#15803d)}.btn.red{background:linear-gradient(135deg,#dc2626,#991b1b)}.btn.gold{background:linear-gradient(135deg,#a16207,#854d0e)}.screen{display:none}.screen.active{display:block}.panel,.card,.question,.answer,.stat{border:1px solid rgba(34,211,238,.22);background:linear-gradient(180deg,rgba(18,32,51,.95),rgba(11,20,36,.98));box-shadow:0 12px 35px rgba(0,0,0,.25);padding:18px;border-radius:14px;margin-bottom:14px}.hero{display:grid;grid-template-columns:1.35fr .75fr;gap:14px}.hero h2,.screen h2{font-size:clamp(34px,7vw,68px);line-height:.95;margin:8px 0}.muted{color:var(--muted)}.eyebrow{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{min-height:130px;cursor:pointer;text-align:left;color:#fff}.card span{font-size:32px}.card b{display:block;font-size:22px;margin:8px 0 4px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{text-align:center}.stat b{display:block;font-size:26px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}select{background:#06101f;color:#fff;border:1px solid rgba(34,211,238,.25);padding:12px;min-width:220px;border-radius:10px}.flash{min-height:270px;text-align:center;display:grid;place-items:center;align-content:center}.flash h3{font-size:clamp(24px,5vw,44px);line-height:1.1;margin:8px 0}.answerText{font-size:clamp(26px,5vw,42px);font-weight:900;color:var(--green);display:none}.explain{color:var(--muted);font-size:17px;display:none}.runnerTop{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:900}.timerbar{height:12px;background:#020617;border-radius:99px;overflow:hidden;margin-top:8px}.timerbar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--cyan))}.question{min-height:160px;display:grid;place-items:center;text-align:center}.question h3{font-size:clamp(24px,4.5vw,42px);margin:0}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}.answer{min-height:90px;text-align:left;color:#fff;font-weight:900;cursor:pointer}.answer:nth-child(1){background:#991b1b}.answer:nth-child(2){background:#1d4ed8}.answer:nth-child(3){background:#a16207}.answer:nth-child(4){background:#166534}.answer.correct{outline:4px solid white}.answer.wrong{opacity:.5}.error{display:none;background:#3f1010;border:1px solid #ef4444;padding:12px;border-radius:10px;margin-bottom:12px}.mobile{display:none}@media(max-width:850px){.hero,.grid,.stats,.answers{grid-template-columns:1fr}.desktopNav{display:none}.mobile{position:fixed;left:8px;right:8px;bottom:8px;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:rgba(5,11,20,.96);border:1px solid rgba(34,211,238,.25);padding:8px;z-index:10}.mobile button{font-size:12px;padding:10px 3px}}
@@ -13,7 +13,7 @@
 <div class="wrap">
 <div id="error" class="error"></div>
 <header class="top">
-  <div class="brand"><h1>DOCJT Academy V6.3</h1><p>Emergency stable build • 401 reviewed questions • no external files</p></div>
+  <div class="brand"><h1>DOCJT Academy V6.4</h1><p>Navigation fix build • 401 reviewed questions • auto-scroll panels</p></div>
   <nav class="nav desktopNav">
     <button data-screen="home" onclick="show('home')">Home</button>
     <button data-screen="study" onclick="show('study')">Study</button>
@@ -93,6 +93,17 @@ function get(k,f){try{var v=localStorage.getItem(k); return v?JSON.parse(v):f}ca
 function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function beep(t){try{var c=new (window.AudioContext||window.webkitAudioContext)(); var o=c.createOscillator(); var g=c.createGain(); var m={click:[520,.05,'square'],ok:[760,.12,'sine'],bad:[150,.18,'sawtooth'],warn:[900,.06,'square'],win:[660,.18,'triangle']}; var x=m[t]||m.click; o.frequency.value=x[0]; o.type=x[2]; g.gain.value=.055; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+x[1]);}catch(e){}}
 
+
+function scrollToPanel(id){
+  setTimeout(function(){
+    var el=$(id);
+    if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  },80);
+}
+function scrollToTop(){
+  setTimeout(function(){ window.scrollTo({top:0, behavior:'smooth'}); },60);
+}
+
 function profile(){return get('docjt_v63_profile',{xp:0,answered:0,correct:0,exams:0,games:0})}
 function saveProfile(p){set('docjt_v63_profile',p)}
 function missed(){return get('docjt_v63_missed',[])}
@@ -102,13 +113,31 @@ function addXP(n){var p=profile(); p.xp+=n; saveProfile(p); renderHome()}
 function record(ok){var p=profile(); p.answered++; if(ok){p.correct++;p.xp+=10} saveProfile(p)}
 function toggleMark(q){var m=marked(); var i=m.findIndex(function(x){return x.id===q.id}); if(i>=0)m.splice(i,1); else m.push({id:q.id,category:q.category,type:q.type,question:q.question,correctAnswer:q.choices[q.answer],explanation:q.explanation}); set('docjt_v63_marked',m); beep('click')}
 
-function show(s){App.screen=s; beep('click'); document.querySelectorAll('.screen').forEach(function(x){x.classList.remove('active')}); $(s).classList.add('active'); document.querySelectorAll('[data-screen]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-screen')===s)}); if(s==='home')renderHome(); if(s==='progress')renderProgress(); if(s==='games')renderBossGrid();}
+function show(s){
+  App.screen=s;
+  beep('click');
+  document.querySelectorAll('.screen').forEach(function(x){x.classList.remove('active')});
+  $(s).classList.add('active');
+  document.querySelectorAll('[data-screen]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-screen')===s)});
+  if(s==='home')renderHome();
+  if(s==='progress')renderProgress();
+  if(s==='games')renderBossGrid();
+  scrollToTop();
+}
 function renderHome(){var p=profile(); var lvl=Math.floor(p.xp/500)+1; var ranks=['Recruit','Cadet','Officer','Senior Officer','Sergeant','Lieutenant','Captain','Commander']; var rank=ranks[Math.min(ranks.length-1,Math.floor((lvl-1)/3))]; $('rank').textContent=rank; $('level').textContent=lvl; $('xp').textContent=p.xp+' XP'; $('xpbar').style.width=((p.xp%500)/5)+'%'; var acc=p.answered?Math.round(p.correct/p.answered*100):0; $('homeStats').innerHTML='<div class="stat"><b>'+acc+'%</b>Accuracy</div><div class="stat"><b>'+p.answered+'</b>Answered</div><div class="stat"><b>'+p.exams+'</b>Exams</div><div class="stat"><b>'+p.games+'</b>Games</div>'}
 function initCats(){var cats=['All Categories'].concat(Array.from(new Set(QUESTION_BANK.map(function(q){return q.category}))).sort()); $('cat').innerHTML=cats.map(function(c){return '<option value="'+escapeHtml(c)+'">'+escapeHtml(c)+'</option>'}).join(''); $('drillcat').innerHTML=cats.filter(function(c){return c!=='All Categories'}).map(function(c){return '<option value="'+escapeHtml(c)+'">'+escapeHtml(c)+'</option>'}).join(''); $('bankCount').textContent=QUESTION_BANK.length}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]})}
 function prep(q){if(!q.choices||q.choices.length<4)return q; var correct=q.choices[q.answer]; var choices=shuffle(q.choices); var copy=Object.assign({},q); copy.choices=choices; copy.answer=choices.indexOf(correct); return copy}
 
-function openStudy(mode){App.deckMode=mode; $('studyBox').style.display='block'; $('studyTitle').textContent={flash:'Flashcards',drill:'Category Drill',rapid:'Rapid Review',marked:'Marked Questions',missed:'Missed Questions',smart:'Smart Review'}[mode]||'Study'; $('catRow').style.display=(mode==='flash'||mode==='rapid')?'flex':'none'; $('drillRow').style.display=mode==='drill'?'flex':'none'; loadDeck();}
+function openStudy(mode){
+  App.deckMode=mode;
+  $('studyBox').style.display='block';
+  $('studyTitle').textContent={flash:'Flashcards',drill:'Category Drill',rapid:'Rapid Review',marked:'Marked Questions',missed:'Missed Questions',smart:'Smart Review'}[mode]||'Study';
+  $('catRow').style.display=(mode==='flash'||mode==='rapid')?'flex':'none';
+  $('drillRow').style.display=mode==='drill'?'flex':'none';
+  loadDeck();
+  scrollToPanel('studyBox');
+}
 function studyPool(){var mode=App.deckMode; if(mode==='marked')return marked().map(function(m){return {id:m.id,category:m.category,type:m.type,question:m.question,choices:[m.correctAnswer],answer:0,explanation:m.explanation}}); if(mode==='missed')return missed().map(function(m){return {id:m.id,category:m.category,type:m.type,question:m.question,choices:[m.correctAnswer],answer:0,explanation:m.explanation}}); if(mode==='smart'){var ids=new Set(missed().map(function(m){return m.id}).concat(marked().map(function(m){return m.id}))); var p=QUESTION_BANK.filter(function(q){return ids.has(q.id)}); return p.length?p:QUESTION_BANK;} if(mode==='drill')return QUESTION_BANK.filter(function(q){return q.category===$('drillcat').value}); var c=$('cat').value; return c==='All Categories'?QUESTION_BANK:QUESTION_BANK.filter(function(q){return q.category===c})}
 function loadDeck(){var p=studyPool(); var max=App.deckMode==='drill'?10:App.deckMode==='rapid'?25:50; App.deck=shuffle(p).slice(0,max).map(prep); App.deckIndex=0; App.flipped=false; renderCard(); if(App.deckMode==='rapid')setTimeout(function(){if(App.deckMode==='rapid'&&!App.flipped)flip()},5000)}
 function renderCard(){$('ans').style.display='none'; $('why').style.display='none'; if(!App.deck.length){$('meta').textContent=App.deckMode.toUpperCase(); $('qtext').textContent='No questions found for this mode yet.'; $('ans').textContent=''; $('why').textContent=''; $('fprogress').textContent=''; return;} var q=App.deck[App.deckIndex]; $('meta').textContent=(q.category||'Review')+' • '+(q.type||'Study'); $('qtext').textContent=q.question; $('ans').textContent=q.choices[q.answer]; $('why').textContent=q.explanation||''; $('fprogress').textContent='Card '+(App.deckIndex+1)+'/'+App.deck.length}
@@ -116,7 +145,16 @@ function flip(){if(!App.deck.length)return; App.flipped=!App.flipped; beep('clic
 function rate(knew){if(!App.deck.length)return; var q=App.deck[App.deckIndex]; if(knew){beep('ok');addXP(5)}else{beep('bad');addMissed(q,'Flashcard missed')} App.deckIndex=(App.deckIndex+1)%App.deck.length; App.flipped=false; renderCard(); if(App.deckMode==='rapid')setTimeout(function(){if(App.deckMode==='rapid'&&!App.flipped)flip()},5000)}
 
 function sample(n){var cats=Array.from(new Set(QUESTION_BANK.map(function(q){return q.category}))); var base=Math.floor(n/cats.length), rem=n%cats.length, out=[]; cats.forEach(function(cat){var pool=shuffle(QUESTION_BANK.filter(function(q){return q.category===cat})); out=out.concat(pool.slice(0,base+(rem-->0?1:0)))}); return shuffle(out).slice(0,n)}
-function startExam(){App.exam=sample(75).map(prep); App.examIndex=0; App.examScore=0; App.examResults=[]; $('examIntro').style.display='none'; $('examRun').style.display='block'; renderExam();}
+function startExam(){
+  App.exam=sample(75).map(prep);
+  App.examIndex=0;
+  App.examScore=0;
+  App.examResults=[];
+  $('examIntro').style.display='none';
+  $('examRun').style.display='block';
+  renderExam();
+  scrollToPanel('examRun');
+}
 function renderExam(){clearInterval(App.examTimer); var q=App.exam[App.examIndex]; var limit=q.type==='Scenario'?45:30; var left=limit; $('ecat').textContent=q.category+' • '+q.type; $('eprog').textContent=(App.examIndex+1)+'/'+App.exam.length; $('escore').textContent='Score '+App.examScore; $('eq').textContent=q.question; $('timerText').textContent='00:'+String(left).padStart(2,'0'); $('timerType').textContent=q.type==='Scenario'?'Scenario: 45 sec':'Recall: 30 sec'; $('timefill').style.width='100%'; $('eanswers').innerHTML=q.choices.map(function(c,i){return '<button class="answer" onclick="answerExam('+i+')">'+escapeHtml(c)+'</button>'}).join(''); App.examTimer=setInterval(function(){left--; $('timerText').textContent='00:'+String(Math.max(0,left)).padStart(2,'0'); $('timefill').style.width=(Math.max(0,left/limit*100))+'%'; if(left<=5&&left>0)beep('warn'); if(left<=0)answerExam(-1)},1000)}
 function answerExam(i){clearInterval(App.examTimer); var q=App.exam[App.examIndex]; var ok=i===q.answer; if(ok){App.examScore++;beep('ok')}else{beep('bad');addMissed(q,i<0?'Timed out':q.choices[i])} record(ok); App.examResults.push({category:q.category,correct:ok}); App.examIndex++; if(App.examIndex>=App.exam.length)finishExam(); else setTimeout(renderExam,200)}
 function finishExam(){var pct=Math.round(App.examScore/App.exam.length*100); var p=profile(); p.exams++; saveProfile(p); addXP(App.examScore*2+(pct>=80?75:0)); var h=get('docjt_v63_history',[]); h.push({date:new Date().toLocaleString(),score:App.examScore,total:App.exam.length,pct:pct,results:App.examResults}); set('docjt_v63_history',h.slice(-50)); beep('win'); alert('Exam complete: '+App.examScore+'/'+App.exam.length+' ('+pct+'%)'); $('examIntro').style.display='block'; $('examRun').style.display='none'; renderHome()}
@@ -131,7 +169,16 @@ function renderBossGrid(){
     btn.onclick=function(){ startBoss(cats[Number(btn.getAttribute('data-boss-index'))]); };
   });
 }
-function startBoss(cat){App.bossCat=cat; App.boss=shuffle(QUESTION_BANK.filter(function(q){return q.category===cat})).slice(0,15).map(prep); App.bossIndex=0; App.bossScore=0; App.bossHP=100; $('bossRun').style.display='block'; renderBoss()}
+function startBoss(cat){
+  App.bossCat=cat;
+  App.boss=shuffle(QUESTION_BANK.filter(function(q){return q.category===cat})).slice(0,15).map(prep);
+  App.bossIndex=0;
+  App.bossScore=0;
+  App.bossHP=100;
+  $('bossRun').style.display='block';
+  renderBoss();
+  scrollToPanel('bossRun');
+}
 function renderBoss(){if(App.bossIndex>=App.boss.length||App.bossHP<=0)return finishBoss(); var q=App.boss[App.bossIndex]; $('bname').textContent=App.bossCat+' Boss'; $('bprog').textContent=(App.bossIndex+1)+'/'+App.boss.length; $('bscore').textContent='Score '+App.bossScore; $('bhp').style.width=App.bossHP+'%'; $('bq').textContent=q.question; $('banswers').innerHTML=q.choices.map(function(c,i){return '<button class="answer" onclick="answerBoss('+i+')">'+escapeHtml(c)+'</button>'}).join('')}
 function answerBoss(i){var q=App.boss[App.bossIndex]; var ok=i===q.answer; if(ok){App.bossScore+=100;App.bossHP=Math.max(0,App.bossHP-12);beep('ok');addXP(8)}else beep('bad'); App.bossIndex++; setTimeout(renderBoss,200)}
 function finishBoss(){var p=profile();p.games++;saveProfile(p);beep('win');alert(App.bossHP<=0?'Boss defeated! Score '+App.bossScore:'Battle complete. Score '+App.bossScore);renderHome()}
