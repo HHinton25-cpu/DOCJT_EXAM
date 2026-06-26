@@ -1,21 +1,23 @@
-# DOCJT Academy V6 Alpha
+# DOCJT Academy V7.6 Refined Question Test
 
-Clean rebuild with:
-- Dark Navy + Neon Cyan hybrid tactical UI
-- Angular beveled cards
-- Your main music embedded: Quiz Click Sprint
-- Your boss music embedded: Crimson Gate
-- Rebuilt flashcards engine
-- Study Hub with Flashcards, Category Drill, Rapid Review, Marked, Missed, Smart Review
-- Exam Simulation
-- Boss Battle Alpha
-- Progress tracking
+Upload only `index.html` to the root of the GitHub repository.
 
-Upload these files to GitHub:
-- index.html
-- main.css
-- app.js
-- questions.js
-- README.md
+Built on the working V7.5 single-file build. Audio remains embedded in index.html.
 
-No audio folder needed.
+Adds:
+- New standalone Refined Test section
+- 146 new objective-based questions from the three new resources
+- Quick 25, Refined 50, Full 75, All Questions
+- Category/objective drills
+- Separate review screen with category breakdown and missed review
+- Retake missed refined questions
+
+Keeps unchanged:
+- Existing original question bank
+- Existing Exam mode
+- Existing Study Hub
+- Existing pixel boss fights
+- Music and SFX
+- Embedded audio / single-file setup
+
+Open with `?v=76` to avoid cache.
